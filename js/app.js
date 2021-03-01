@@ -30,7 +30,7 @@ Product.counter = 0;
 
 
 for ( let i = 0; i < productArry.length; i++ ) {
-  new Product( getName( productArry[i]) , productArry[i] );
+  new Product( getName( productArry[i] ) , productArry[i] );
 
 }
 function getName ( fileName ){
@@ -109,7 +109,7 @@ function result (){
   for ( let i = 0 ;i < Product.all.length ;i++ ){
     const liElement = document.createElement( 'li' );
     ulElement.appendChild( liElement );
-    liElement.textContent = `${Product.all[i].name} had ${Product.all[i].clicks} and was seen ${Product.all[i].show} times `;
+    liElement.textContent = `${Product.all[i].name} had ${Product.all[i].clicks } volts and was seen ${Product.all[i].show} times `;
   }
 
 
