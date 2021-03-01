@@ -1,5 +1,5 @@
 'use strict';
-let productArry = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum', 'chair', 'cthulhu', 'dog-duck', 'dragon', 'pen', 'pet-sweep', 'scissors', 'shark', 'sweep', 'tauntaun', 'unicorn', 'usb', 'water-can', 'wine-glass'];
+let productArry = ['bag.jpg', 'banana.jpg', 'bathroom.jpg', 'boots.jpg', 'breakfast.jpg', 'bubblegum.jpg', 'chair.jpg', 'cthulhu.jpg', 'dog-duck.jpg', 'dragon.jpg', 'pen.jpg', 'pet-sweep.jpg', 'scissors.jpg', 'shark.jpg', 'sweep.png', 'tauntaun.jpg', 'unicorn.jpg', 'usb.gif', 'water-can.jpg', 'wine-glass.jpg'];
 
 const imageSection = document.getElementById( 'imageSection' );
 const leftImage = document.getElementById( 'leftImage' );
@@ -13,12 +13,12 @@ function randomNumber( min, max ) {
 let leftProductIndex = 0;
 let centerProuductIndex = 0;
 let rightProductIndex = 0;
-const clickCounter = 26;
+const clickCounter = 25;
 
 Product.all = [];
-function Product( name ) {
+function Product( name ,img ) {
   this.name = name;
-  this.image = `./img/${name}.jpg`;
+  this.image = `./img/${img}`;
   this.clicks = 0;
   this.show = 0;
 
@@ -28,11 +28,18 @@ console.log( Product.all );
 
 Product.counter = 0;
 
+
 for ( let i = 0; i < productArry.length; i++ ) {
-  new Product( productArry[i] );
+  new Product( getName( productArry[i]) , productArry[i] );
+
+}
+function getName ( fileName ){
+
+  return fileName.split( '.' ).slice( 0, -1 ).join( '.' );
 }
 
 function renderNewProduct() {
+  document.getElementById( 'button1' ).style.visibility = 'hidden';
   let leftIndex = randomNumber( 0, Product.all.length - 1 );
   leftImage.src = Product.all[leftIndex].image;
   leftImage.alt = Product.all[leftIndex].name;
@@ -62,6 +69,7 @@ function renderNewProduct() {
 
 }
 
+imageSection.addEventListener( 'click', handelClick );
 function handelClick( event ) {
   if ( Product.counter < clickCounter ) {
     const clickedElement = event.target;
@@ -79,35 +87,38 @@ function handelClick( event ) {
       renderNewProduct();
       console.log( Product.all );
     }
+  }else { invoker();
+
   }
+
 }
 
-imageSection.addEventListener( 'click', handelClick );
+function invoker (){
+  document.getElementById( 'button1' ).style.visibility = 'visible';
+}
+
 
 console.log( Product.all );
 renderNewProduct();
-if ( clickCounter= 26){
-  let button1 = document.getElementById( 'bitton' );
-  const list = document.getElementById( 'list' );
-  if ( window.onclick ) {
-  
-    const buttonElement = document.createAttribute( 'button' );
-    button1.appendChild( buttonElement );
-    button1 = 'view result';
-    if ( button1.onclick ) {
-      const ulElement = document.createAttribute( 'ul' );
-      list.appendChild( ulElement );
-      for ( let i = 0; i < clickCounter; i++ ) {
-        let liElement = document.createAttribute( 'li' );
-        ulElement.appendChild( liElement );
-        liElement = `volid ${Product.clicks}`;
-      }
-  
-    }
+
+function result (){
+  const resultElement = document.getElementById( 'list' );
+  const ulElement = document.createElement( 'ul' );
+  resultElement.appendChild( ulElement );
+
+  for ( let i = 0 ;i < Product.all.length ;i++ ){
+    const liElement = document.createElement( 'li' );
+    ulElement.appendChild( liElement );
+    liElement.textContent = `${Product.all[i].name} had ${Product.all[i].clicks} and was seen ${Product.all[i].show} times `;
   }
-  
-  window.onclick = alert( 'ahmad' );
+
+
+
 }
+
+
+
+// document.getElementById( 'imageSection' ).removeEventListener( 'click', handelClick );
 
 
 

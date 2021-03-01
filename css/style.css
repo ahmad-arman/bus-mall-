@@ -1,16 +1,13 @@
+*{
+    box-sizing: border-box;
+}
+body{
+    width: 960px;
+    margin: 0 auto;
+}
 img{
-    display: inline-block;
-    
+    width: 250px;
+    height: 400px;
+}
 
-    width: 300px;
-    height: 250px;
-    padding: 10px;
 
-}
- header section{
-    background-color: black;
-}
-section div{
-    text-decoration: none;
-    display: block;
-}
