@@ -1,1 +1,2 @@
 # bus-mall-
+I do website called busmall that is mean when open page you have 3 image to sellect image you like it then shown one agine 3 image to sellect one image untill 25 click on image then will appear the view result when click on it you will show list have name product and how many choose it and how many shown it , and show chat appear like list .
