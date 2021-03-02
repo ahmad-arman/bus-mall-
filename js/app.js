@@ -14,9 +14,10 @@ let leftProductIndex = 0;
 let centerProuductIndex = 0;
 let rightProductIndex = 0;
 const clickCounter = 25;
+let indexNoRepeat = [];
 
 Product.all = [];
-function Product( name ,img ) {
+function Product( name, img ) {
   this.name = name;
   this.image = `./img/${img}`;
   this.clicks = 0;
@@ -30,17 +31,24 @@ Product.counter = 0;
 
 
 for ( let i = 0; i < productArry.length; i++ ) {
-  new Product( getName( productArry[i] ) , productArry[i] );
+  new Product( getName( productArry[i] ), productArry[i] );
 
 }
-function getName ( fileName ){
+function getName( fileName ) {
 
   return fileName.split( '.' ).slice( 0, -1 ).join( '.' );
 }
 
 function renderNewProduct() {
   document.getElementById( 'button1' ).style.visibility = 'hidden';
-  let leftIndex = randomNumber( 0, Product.all.length - 1 );
+
+
+  let leftIndex;
+  do {
+    leftIndex = randomNumber( 0, Product.all.length - 1 );
+  } while ( indexNoRepeat.includes( leftIndex ) === true );
+
+
   leftImage.src = Product.all[leftIndex].image;
   leftImage.alt = Product.all[leftIndex].name;
   leftProductIndex = leftIndex;
@@ -50,7 +58,7 @@ function renderNewProduct() {
   do {
     centerIndex = randomNumber( 0, Product.all.length - 1 );
     rightIndex = randomNumber( 0, Product.all.length - 1 );
-  } while ( ( leftIndex === rightIndex ) || ( leftIndex === centerIndex ) || ( centerIndex === rightIndex ) );
+  } while ( ( leftIndex === rightIndex ) || ( leftIndex === centerIndex ) || ( centerIndex === rightIndex ) || ( indexNoRepeat.includes( centerIndex ) === true ) || ( indexNoRepeat.includes( rightIndex ) === true ) );
 
 
   centerImage.src = Product.all[centerIndex].image;
@@ -64,6 +72,10 @@ function renderNewProduct() {
   Product.all[leftIndex].show++;
   Product.all[centerIndex].show++;
   Product.all[rightIndex].show++;
+
+  indexNoRepeat[0] = leftIndex;
+  indexNoRepeat[1] = centerIndex;
+  indexNoRepeat[2] = rightIndex;
 
 
 
@@ -87,13 +99,15 @@ function handelClick( event ) {
       renderNewProduct();
       console.log( Product.all );
     }
-  }else { invoker();
+  } else {
+    console.log( 'ahmad' );
+    invoker();
 
   }
 
 }
 
-function invoker (){
+function invoker() {
   document.getElementById( 'button1' ).style.visibility = 'visible';
 }
 
@@ -101,30 +115,172 @@ function invoker (){
 console.log( Product.all );
 renderNewProduct();
 
-function result (){
+function result() {
   const resultElement = document.getElementById( 'list' );
   const ulElement = document.createElement( 'ul' );
   resultElement.appendChild( ulElement );
 
-  for ( let i = 0 ;i < Product.all.length ;i++ ){
+  for ( let i = 0; i < Product.all.length; i++ ) {
     const liElement = document.createElement( 'li' );
     ulElement.appendChild( liElement );
-    liElement.textContent = `${Product.all[i].name} had ${Product.all[i].clicks } volts and was seen ${Product.all[i].show} times `;
+    liElement.textContent = `${Product.all[i].name} had ${Product.all[i].clicks} volts and was seen ${Product.all[i].show} times `;
   }
 
 
 
 }
+function getChart() {
+
+  let nameArray = [];
+  let clicksArray = [];
+  let shownArray = [];
+
+  for ( let i = 0; i < Product.all.length; i++ ) {
+
+    nameArray.push( Product.all[i].name );
+    clicksArray.push( Product.all[i].clicks );
+    shownArray.push( Product.all[i].show );
+
+  }
+
+  console.log( 'this is name', nameArray );
+  console.log( 'this is clicks', clicksArray );
+  console.log( 'this is shown time', shownArray );
 
 
 
-// document.getElementById( 'imageSection' ).removeEventListener( 'click', handelClick );
+
+
+  let ctx = document.getElementById( 'myChart' ).getContext( '2d' );
+  let myChart = new Chart( ctx, {
+    type: 'bar',
+    data: {
+      labels: nameArray,
+      datasets: [{
+        label: '# of Votes',
+        data: clicksArray,
+        backgroundColor: [
+
+          'rgba(30, 99, 132, 0.2)',
+          'rgba(30, 99, 132, 0.2)',
+          'rgba(30, 99, 132, 0.2)',
+          'rgba(30, 99, 132, 0.2)',
+          'rgba(30, 99, 132, 0.2)',
+          'rgba(30, 99, 132, 0.2)',
+          'rgba(30, 99, 132, 0.2)',
+          'rgba(30, 99, 132, 0.2)',
+          'rgba(30, 99, 132, 0.2)',
+          'rgba(30, 99, 132, 0.2)',
+          'rgba(30, 99, 132, 0.2)',
+          'rgba(30, 99, 132, 0.2)',
+          'rgba(30, 99, 132, 0.2)',
+          'rgba(30, 99, 132, 0.2)',
+          'rgba(30, 99, 132, 0.2)',
+          'rgba(30, 99, 132, 0.2)',
+          'rgba(30, 99, 132, 0.2)',
+          'rgba(30, 99, 132, 0.2)',
+          'rgba(30, 99, 132, 0.2)',
+          'rgba(30, 99, 132, 0.2)'
 
 
 
 
+        ],
+        borderColor: [
+          'rgba(30, 99, 132, 1)',
+          'rgba(30, 99, 132, 1)',
+          'rgba(30, 99, 132, 1)',
+          'rgba(30, 99, 132, 1)',
+          'rgba(30, 99, 132, 1)',
+          'rgba(30, 99, 132, 1)',
+          'rgba(30, 99, 132, 1)',
+          'rgba(30, 99, 132, 1)',
+          'rgba(30, 99, 132, 1)',
+          'rgba(30, 99, 132, 1)',
+          'rgba(30, 99, 132, 1)',
+          'rgba(30, 99, 132, 1)',
+          'rgba(30, 99, 132, 1)',
+          'rgba(30, 99, 132, 1)',
+          'rgba(30, 99, 132, 1)',
+          'rgba(30, 99, 132, 1)',
+          'rgba(30, 99, 132, 1)',
+          'rgba(30, 99, 132, 1)',
+          'rgba(30, 99, 132, 1)',
+          'rgba(30, 99, 132, 1)'
+
+        ],
+        borderWidth: 1
+
+      },
+      {
+        label: '# Shown',
+        data: shownArray,
+        backgroundColor: [
+
+          'rgba(255, 0, 0, 0.2)',
+          'rgba(255, 0, 0, 0.2)',
+          'rgba(255, 0, 0, 0.2)',
+          'rgba(255, 0, 0, 0.2)',
+          'rgba(255, 0, 0, 0.2)',
+          'rgba(255, 0, 0, 0.2)',
+          'rgba(255, 0, 0, 0.2)',
+          'rgba(255, 0, 0, 0.2)',
+          'rgba(255, 0, 0, 0.2)',
+          'rgba(255, 0, 0, 0.2)',
+          'rgba(255, 0, 0, 0.2)',
+          'rgba(255, 0, 0, 0.2)',
+          'rgba(255, 0, 0, 0.2)',
+          'rgba(255, 0, 0, 0.2)',
+          'rgba(255, 0, 0, 0.2)',
+          'rgba(255, 0, 0, 0.2)',
+          'rgba(255, 0, 0, 0.2)',
+          'rgba(255, 0, 0, 0.2)',
+          'rgba(255, 0, 0, 0.2)',
+          'rgba(255, 0, 0, 0.2)',
+
+
+        ],
+
+        borderColor: [
+          'rgba(255, 0, 0, 1)',
+          'rgba(255, 0, 0, 1)',
+          'rgba(255, 0, 0, 1)',
+          'rgba(255, 0, 0, 1)',
+          'rgba(255, 0, 0, 1)',
+          'rgba(255, 0, 0, 1)',
+          'rgba(255, 0, 0, 1)',
+          'rgba(255, 0, 0, 1)',
+          'rgba(255, 0, 0, 1)',
+          'rgba(255, 0, 0, 1)',
+          'rgba(255, 0, 0, 1)',
+          'rgba(255, 0, 0, 1)',
+          'rgba(255, 0, 0, 1)',
+          'rgba(255, 0, 0, 1)',
+          'rgba(255, 0, 0, 1)',
+          'rgba(255, 0, 0, 1)',
+          'rgba(255, 0, 0, 1)',
+          'rgba(255, 0, 0, 1)',
+          'rgba(255, 0, 0, 1)',
+          'rgba(255, 0, 0, 1)',
+
+
+        ],
+
+
+      }]
+    },
+    options: {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+      }
+    }
+  } );
 
 
 
 
-
+}

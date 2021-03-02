@@ -29,14 +29,18 @@
         </header>
         <main>
             <h1>Bus mall</h1>
+            
 
             <div class="image-section" id="imageSection">
                 <img src="" alt="" id="leftImage">
                 <img src="" alt="" id='centerImage'>
                 <img src="" alt="" id="rightImage">
+                
             </div>
-
-            <button id="button1" onclick="result()"> View Rsuelt </button>
+            
+            <button id="button1" onclick="result(); getChart();"> View Rsuelt </button>
+            
+            <canvas id="myChart" width="400" height="400"></canvas>    
             <div id="list"> </div>
 
         </main>
@@ -45,6 +49,7 @@
 
         </footer>
     </section>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
     <script src="./js/app.js"> </script>
 </body>
 

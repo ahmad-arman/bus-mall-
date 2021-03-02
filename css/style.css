@@ -40,7 +40,7 @@ h1 {
 }
 .coun {
     display: grid;
-    grid-template-rows: 100px  minmax(calc(100vh - 170px) , 1fr) 50px;
+    grid-template-rows: 100px  minmax(calc(100vh - 150px) , 1fr) 50px;
     gap: 20px ;
 }
 .image-section {
@@ -49,25 +49,35 @@ h1 {
     gap: 15px;
   }
   #list {
-    column-count: 2 ;
-   line-height: 1.4;
     
-    padding: 8px 8px;
+    column-count: 2;
+    column-gap: 100px;
+    line-height: 1.5;
+    padding: 10px;
+    column-rule-style: solid;
+    column-rule-color: blueviolet;
+    
 
   }
   #list ul {
-    background: black;
+    /* background: black; */
     border: 2px solid silver;
+    list-style:circle ;
+
     
   }
   #list ul li {
       color:blueviolet;
+      text-align: left;
+      background-color: black;
+      margin-left: 10px;
   }
   button{
       background-color:violet;
       padding: 5px;
       width: 150px ;
       margin: 10px 0 0 0;
+      
   }
   
   footer {
