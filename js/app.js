@@ -7,7 +7,13 @@ const centerImage = document.getElementById( 'centerImage' );
 const rightImage = document.getElementById( 'rightImage' );
 //console.log( productArry,imagesection,leftimage,centerimage,rightimage );
 function randomNumber( min, max ) {
-  return Math.floor( Math.random() * ( max - min + 1 ) ) + min;
+  let calc = Math.floor( Math.random() * ( max - min + 1 ) ) + min;
+  for ( let i = 0 ;i < indexNoRepeat.length;i++ ){
+    if ( calc === indexNoRepeat[i] ){
+      return Math.floor( Math.random() * ( max - min + 1 ) ) + min;
+    }
+  }return ( calc );
+
 }
 
 let leftProductIndex = 0;
@@ -44,38 +50,37 @@ function renderNewProduct() {
 
 
   let leftIndex;
-  do {
-    leftIndex = randomNumber( 0, Product.all.length - 1 );
-  } while ( indexNoRepeat.includes( leftIndex ) === true );
 
-
+  leftIndex = randomNumber( 0, Product.all.length - 1 );
   leftImage.src = Product.all[leftIndex].image;
   leftImage.alt = Product.all[leftIndex].name;
   leftProductIndex = leftIndex;
+  indexNoRepeat.push( leftIndex );
+
 
   let rightIndex;
   let centerIndex;
   do {
     centerIndex = randomNumber( 0, Product.all.length - 1 );
     rightIndex = randomNumber( 0, Product.all.length - 1 );
-  } while ( ( leftIndex === rightIndex ) || ( leftIndex === centerIndex ) || ( centerIndex === rightIndex ) || ( indexNoRepeat.includes( centerIndex ) === true ) || ( indexNoRepeat.includes( rightIndex ) === true ) );
+  } while ( ( leftIndex === rightIndex ) || ( leftIndex === centerIndex ) || ( centerIndex === rightIndex ) );
 
 
   centerImage.src = Product.all[centerIndex].image;
   centerImage.alt = Product.all[centerIndex].name;
   centerProuductIndex = centerIndex;
+  indexNoRepeat.push( centerIndex );
 
   rightImage.src = Product.all[rightIndex].image;
   rightImage.alt = Product.all[rightIndex].name;
   rightProductIndex = rightIndex;
+  indexNoRepeat.push( rightIndex );
 
   Product.all[leftIndex].show++;
   Product.all[centerIndex].show++;
   Product.all[rightIndex].show++;
 
-  indexNoRepeat[0] = leftIndex;
-  indexNoRepeat[1] = centerIndex;
-  indexNoRepeat[2] = rightIndex;
+
 
 
 
