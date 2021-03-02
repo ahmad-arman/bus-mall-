@@ -10,10 +10,16 @@ function randomNumber( min, max ) {
   let calc = Math.floor( Math.random() * ( max - min + 1 ) ) + min;
   for ( let i = 0 ;i < indexNoRepeat.length;i++ ){
     if ( calc === indexNoRepeat[i] ){
-      return Math.floor( Math.random() * ( max - min + 1 ) ) + min;
+      calc = Math.floor( Math.random() * ( max - min + 1 ) ) + min;
     }
   }return ( calc );
 
+}
+function getData(){
+  let string = localStorage.getItem( 'product' ) ;
+  if( string ){
+    Product.all = JSON.parse( string );
+  }
 }
 
 let leftProductIndex = 0;
@@ -30,8 +36,17 @@ function Product( name, img ) {
   this.show = 0;
 
   Product.all.push( this );
+
+
 }
 console.log( Product.all );
+
+
+function setData() {
+  let get = JSON.stringify( Product.all );
+  localStorage.setItem ( 'product' ,get );
+}
+
 
 Product.counter = 0;
 
@@ -45,9 +60,10 @@ function getName( fileName ) {
   return fileName.split( '.' ).slice( 0, -1 ).join( '.' );
 }
 
+
+
 function renderNewProduct() {
   document.getElementById( 'button1' ).style.visibility = 'hidden';
-
 
   let leftIndex;
 
@@ -55,7 +71,7 @@ function renderNewProduct() {
   leftImage.src = Product.all[leftIndex].image;
   leftImage.alt = Product.all[leftIndex].name;
   leftProductIndex = leftIndex;
-  indexNoRepeat.push( leftIndex );
+  indexNoRepeat.push( leftProductIndex );
 
 
   let rightIndex;
@@ -69,12 +85,14 @@ function renderNewProduct() {
   centerImage.src = Product.all[centerIndex].image;
   centerImage.alt = Product.all[centerIndex].name;
   centerProuductIndex = centerIndex;
-  indexNoRepeat.push( centerIndex );
+  indexNoRepeat.push( centerProuductIndex );
+
 
   rightImage.src = Product.all[rightIndex].image;
   rightImage.alt = Product.all[rightIndex].name;
   rightProductIndex = rightIndex;
-  indexNoRepeat.push( rightIndex );
+  indexNoRepeat.push( rightProductIndex );
+
 
   Product.all[leftIndex].show++;
   Product.all[centerIndex].show++;
@@ -82,6 +100,7 @@ function renderNewProduct() {
 
 
 
+  // localStorage.setItem( 'Product', JSON.stringify( Product.all ) );
 
 
 }
@@ -93,12 +112,15 @@ function handelClick( event ) {
     if ( clickedElement.id === 'leftImage' || clickedElement.id === 'centerImage' || clickedElement.id === 'rightImage' ) {
       if ( clickedElement.id === 'leftImage' ) {
         Product.all[leftProductIndex].clicks++;
+        setData();
       }
       if ( clickedElement.id === 'centerImage' ) {
         Product.all[centerProuductIndex].clicks++;
+        setData();
       }
       if ( clickedElement.id === 'rightImage' ) {
         Product.all[rightProductIndex].clicks++;
+        setData();
       }
       Product.counter++;
       renderNewProduct();
@@ -148,9 +170,6 @@ function getChart() {
 
   }
 
-  console.log( 'this is name', nameArray );
-  console.log( 'this is clicks', clicksArray );
-  console.log( 'this is shown time', shownArray );
 
 
 
@@ -289,3 +308,9 @@ function getChart() {
 
 
 }
+
+
+getData();
+
+
+
